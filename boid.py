@@ -75,7 +75,8 @@ class Boid:
 		for mate in flockMates:
 			dist = getDistance(self.position, mate.position)
 			if mate is not self and dist < NEIGHBORHOOD_RADIUS:
-				steering.add(mate.velocity)
+				vel = mate.velocity.Normalize()
+				steering.add(vel)
 				mate.color = hsv_to_rgb( self.hue ,1, 1)
 
 				total += 1
@@ -84,7 +85,7 @@ class Boid:
 			steering = steering / total
 			steering.normalize()
 			steering = steering * self.max_speed
-			steering = steering - self.velocity
+			steering = steering - self.velocity.Normalize()
 			steering.limit(self.max_length)
 		return steering
 

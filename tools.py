@@ -41,6 +41,12 @@ class Vector:
 		mag = self.magnitude()
 		if not (mag == 0 ):
 			self = self/mag
+	def Normalize(self):
+		mag = self.magnitude()
+		if mag != 0:
+			return Vector(self.x/mag, self.y/mag)
+		else:
+			return Vector(1, 1)
 
 	def heading(self):
 		angle = atan2(self.y, self.x)
