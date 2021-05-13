@@ -64,6 +64,9 @@ class Vector:
 		self.x = x
 		self.y = y
 
+	def __repr__(self):
+		return f'vector-> x:{self.x}, y:{self.y}'
+
 
 def getDistance(v1, v2):
 	return sqrt((v2.x - v1.x)*(v2.x - v1.x) + (v2.y -v1.y)*(v2.y - v1.y))

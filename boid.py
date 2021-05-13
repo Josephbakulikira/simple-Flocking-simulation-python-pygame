@@ -3,7 +3,7 @@ from tools import *
 from random import uniform
 import colorsys
 from matrix import *
-from math import pi
+from math import pi,sin,cos
 # def hsvToRGB(h, s, v):
 # 	return tuple(round(i * 255) for i in colorsys.hsv_to_rgb(h,s,v))
 
@@ -19,6 +19,7 @@ class Boid:
 		self.velocity = self.velocity * uniform(1.5, 4)
 		self.acceleration = Vector()
 		self.color = (255, 255,255)
+		self.temp = self.color
 		self.secondaryColor = (70, 70, 70)
 		self.max_speed = 3
 		self.max_length = 1
@@ -26,6 +27,8 @@ class Boid:
 		self.stroke = 5
 		self.angle = 0
 		self.hue = 0
+		self.toggles = {"separation":True, "alignment":True, "cohesion":True}
+		self.values = {"separation":0.1, "alignment":0.1, "cohesion":0.1}
 
 	def limits(self, width , height):
 		if self.position.x > width:
@@ -40,12 +43,22 @@ class Boid:
 
 	def behaviour(self, flock):
 		self.acceleration.reset()
-		avoid = self.separation(flock)
-		align = self.alignment(flock)
-		coh = self.cohesion(flock)
-		self.acceleration.add(avoid)
-		self.acceleration.add(align)
-		self.acceleration.add(coh)
+
+		if self.toggles["separation"] == True:
+			avoid = self.separation(flock)
+			avoid = avoid * self.values["separation"]
+			self.acceleration.add(avoid)
+
+		if self.toggles["cohesion"]== True:
+			coh = self.cohesion(flock)
+			coh = coh * self.values["cohesion"]
+			self.acceleration.add(coh)
+			
+		if self.toggles["alignment"] == True:
+			align = self.alignment(flock)
+			align = align * self.values["alignment"]
+			self.acceleration.add(align)
+
 
 	def separation(self, flockMates):
 		total = 0
@@ -80,6 +93,7 @@ class Boid:
 				mate.color = hsv_to_rgb( self.hue ,1, 1)
 
 				total += 1
+
 
 		if total > 0:
 			steering = steering / total
