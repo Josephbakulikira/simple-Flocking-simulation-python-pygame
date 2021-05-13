@@ -1,6 +1,11 @@
 # simple-Flocking-simulation-python-pygame
 This code need a couple of optimization and refactorization,
 ---
+#### Libraries
+    - pygame : pip install pygame
+    - colorsys : pip install colorsys
+---
+---
 #### Controls
     "U" to toggle the UI panel
     "R" to reset
