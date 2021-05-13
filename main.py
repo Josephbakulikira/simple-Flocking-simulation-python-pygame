@@ -12,7 +12,7 @@ window = pygame.display.set_mode(size, pygame.FULLSCREEN)
 clock = pygame.time.Clock()
 fps = 60
 
-scale = 50
+scale = 40
 Distance = 5
 speed = 0.0005
 
@@ -33,7 +33,10 @@ showUI = False
 run = True
 while run:
 	clock.tick(fps)
-	window.fill((10, 10 ,10))
+	window.fill((10, 10, 15))
+
+	n = numberInput.value
+	scale = sliderScale.value
 
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
@@ -65,6 +68,7 @@ while run:
 	for boid in flock:
 		boid.toggles = {"separation": toggleSeparation.state, "alignment": toggleAlignment.state,"cohesion": toggleCohesion.state}
 		boid.values = {"separation": separationInput.value/100, "alignment": alignmentInput.value/100,"cohesion": cohesionInput.value/100}
+		boid.radius = scale
 		boid.limits(Width, Height)
 		boid.behaviour(flock)
 		boid.update()
@@ -72,12 +76,13 @@ while run:
 		boid.Draw(window, Distance, scale)
 
 
+
 	if showUI == True:
 		resetButton.HandleMouse()
 		toggleSeparation.HandleMouse()
 		toggleCohesion.HandleMouse()
 		toggleAlignment.HandleMouse()
-
+		sliderScale.HandleMouse()
 		panel.Render(window)
 		resetButton.Render(window)
 		Behaviours.Render(window)
@@ -87,6 +92,8 @@ while run:
 		SeparationValue.Render(window)
 		AlignmentValue.Render(window)
 		CohesionValue.Render(window)
+		NumberOfBoids.Render(window)
+		ScaleText.Render(window)
 
 		toggleSeparation.Render(window)
 		toggleAlignment.Render(window)
@@ -95,6 +102,9 @@ while run:
 		separationInput.Render(window, textI, backSpace, keyPressed)
 		alignmentInput.Render(window, textI, backSpace, keyPressed)
 		cohesionInput.Render(window, textI, backSpace, keyPressed)
+		numberInput.Render(window, textI, backSpace, keyPressed)
+
+		sliderScale.Render(window)
 	else:
 		UItoggle.Render(window)
 	backSpace = False

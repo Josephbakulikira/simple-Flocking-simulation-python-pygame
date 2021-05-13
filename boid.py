@@ -29,7 +29,7 @@ class Boid:
 		self.hue = 0
 		self.toggles = {"separation":True, "alignment":True, "cohesion":True}
 		self.values = {"separation":0.1, "alignment":0.1, "cohesion":0.1}
-
+		self.radius = 40
 	def limits(self, width , height):
 		if self.position.x > width:
 			self.position.x = 0
@@ -53,7 +53,7 @@ class Boid:
 			coh = self.cohesion(flock)
 			coh = coh * self.values["cohesion"]
 			self.acceleration.add(coh)
-			
+
 		if self.toggles["alignment"] == True:
 			align = self.alignment(flock)
 			align = align * self.values["alignment"]
@@ -66,7 +66,7 @@ class Boid:
 
 		for mate in flockMates:
 			dist = getDistance(self.position, mate.position)
-			if mate is not self and dist < NEIGHBORHOOD_RADIUS:
+			if mate is not self and dist < self.radius:
 				temp = SubVectors(self.position,mate.position)
 				temp = temp/(dist ** 2)
 				steering.add(temp)
@@ -87,7 +87,7 @@ class Boid:
 		# hue = uniform(0, 0.5)
 		for mate in flockMates:
 			dist = getDistance(self.position, mate.position)
-			if mate is not self and dist < NEIGHBORHOOD_RADIUS:
+			if mate is not self and dist < self.radius:
 				vel = mate.velocity.Normalize()
 				steering.add(vel)
 				mate.color = hsv_to_rgb( self.hue ,1, 1)
@@ -109,7 +109,7 @@ class Boid:
 
 		for mate in flockMates:
 			dist = getDistance(self.position, mate.position)
-			if mate is not self and dist < NEIGHBORHOOD_RADIUS:
+			if mate is not self and dist < self.radius:
 				steering.add(mate.position)
 				total += 1
 

@@ -1,8 +1,8 @@
 import pygame
 from constants import *
-
+from tools import *
 class Button:
-    def __init__(self, text, position = (Width-230, 500) , w = 100, h= 50, border=10, color = (0, 0, 0), borderColor = (64, 123, 158)):
+    def __init__(self, text, position = (Width-230, 600) , w = 100, h= 50, border=10, color = (0, 0, 0), borderColor = (64, 123, 158)):
         self.text = text
         self.position = position
         self.w = w
@@ -45,7 +45,7 @@ class Button:
         screen.blit(text, textRect)
 
 class Panel:
-    def __init__(self, position = (Width-350, 100), w= 345, h= 400, color=(8, 3, 12)):
+    def __init__(self, position = (Width-350, 100), w= 345, h= 500, color=(8, 3, 12)):
         self.position = position
         self.w = w
         self.h = h
@@ -65,7 +65,7 @@ class ToggleButton:
         self.activeColor = activeColor
         self.color = color
 
-    def HandleMouse(self, HoverColor = (40, 40, 40)):
+    def HandleMouse(self, HoverColor = (150, 120, 40)):
         m = pygame.mouse.get_pos()
 
         if m[0] >= self.position[0] and m[0] <= self.position[0] + self.w:
@@ -74,6 +74,7 @@ class ToggleButton:
                 self.activeColor = HoverColor
                 if pygame.mouse.get_pressed()[0]:
                     self.state = not self.state
+                    self.color = (255, 255, 255)
             else:
                 self.color = self.temp[1]
                 self.activeColor =self.temp[0]
@@ -162,3 +163,41 @@ class DigitInput:
         textRect.center = (self.position[0]+self.w//2, self.position[1]+self.h//2)
         pygame.draw.rect(screen, self.color, pygame.Rect(self.position[0], self.position[1], self.w, self.h))
         screen.blit(text, textRect)
+
+class Slider:
+    def __init__(self,x, y, val, min1, max1, length, h):
+        self.value = val
+        self.x = x
+        self.y = y
+        self.h = h
+        self.min1 = min1
+        self.max1 = max1
+        self.length = length
+        self.lineColor = (20, 10, 20)
+        self.rectradius = 15
+        self.temp_radius = self.rectradius
+        self.rectColor = (255, 255, 255)
+        self.v = 0.4
+        self.temp = self.lineColor
+    def Calculate(self, val):
+        self.v = translate(val, 0, self.length, 0, 1)
+        self.value = self.v * 100
+    def HandleMouse(self):
+
+        mx, my = pygame.mouse.get_pos()
+        if mx >= self.x and mx <= self.x + self.length:
+            if my >= self.y and my <= self.y + self.h:
+                self.rectradius = 22
+                self.Calculate(mx - self.x)
+            else:
+                self.lineColor = self.temp
+                self.rectradius = self.temp_radius
+        else:
+            self.lineColor = self.temp
+            self.rectradius = self.temp_radius
+
+    def Render(self,screen):
+        pygame.draw.rect(screen, self.lineColor, pygame.Rect(self.x, self.y, self.length, self.h))
+        x = int((self.v * self.length) + self.x)
+        pygame.draw.rect(screen, self.rectColor, pygame.Rect(self.x, self.y, int( self.v * self.length), self.h))
+        pygame.draw.circle(screen, self.rectColor, (x, self.y), self.rectradius)
