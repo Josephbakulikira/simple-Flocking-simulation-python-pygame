@@ -5,6 +5,8 @@ panel.color = (0, 0, 0)
 resetButton = Button("Reset")
 
 Behaviours = TextUI("BEHAVIOURS", (Width-180, 120), (255, 255, 255))
+UItoggle = TextUI("Press 'U' to show parameter panel", (Width-180, 120), (55, 120, 255))
+
 
 Separation = TextUI("Separation: ", (Width-245, 180), (255, 255, 255))
 Alignment = TextUI("Alignment: ", (Width-245, 220), (255, 255, 255))

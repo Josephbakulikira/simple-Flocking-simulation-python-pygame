@@ -29,6 +29,7 @@ reset = False
 SpaceButtonPressed = False
 backSpace = False
 keyPressed = False
+showUI = False
 run = True
 while run:
 	clock.tick(fps)
@@ -47,9 +48,13 @@ while run:
 
 			textI = pygame.key.name(event.key)
 			keyPressed = True
+
 		if event.type == pygame.KEYUP:
 			if event.key == pygame.K_BACKSPACE:
 				backSpace = True
+			if event.key == pygame.K_u:
+				showUI = not showUI
+
 	if reset == True or resetButton.state == True:
 		flock = []
 		for i in range(n):
@@ -66,28 +71,32 @@ while run:
 		boid.hue += speed
 		boid.Draw(window, Distance, scale)
 
-	resetButton.HandleMouse()
-	toggleSeparation.HandleMouse()
-	toggleCohesion.HandleMouse()
-	toggleAlignment.HandleMouse()
 
-	panel.Render(window)
-	resetButton.Render(window)
-	Behaviours.Render(window)
-	Separation.Render(window)
-	Alignment.Render(window)
-	Cohesion.Render(window)
-	SeparationValue.Render(window)
-	AlignmentValue.Render(window)
-	CohesionValue.Render(window)
+	if showUI == True:
+		resetButton.HandleMouse()
+		toggleSeparation.HandleMouse()
+		toggleCohesion.HandleMouse()
+		toggleAlignment.HandleMouse()
 
-	toggleSeparation.Render(window)
-	toggleAlignment.Render(window)
-	toggleCohesion.Render(window)
+		panel.Render(window)
+		resetButton.Render(window)
+		Behaviours.Render(window)
+		Separation.Render(window)
+		Alignment.Render(window)
+		Cohesion.Render(window)
+		SeparationValue.Render(window)
+		AlignmentValue.Render(window)
+		CohesionValue.Render(window)
 
-	separationInput.Render(window, textI, backSpace, keyPressed)
-	alignmentInput.Render(window, textI, backSpace, keyPressed)
-	cohesionInput.Render(window, textI, backSpace, keyPressed)
+		toggleSeparation.Render(window)
+		toggleAlignment.Render(window)
+		toggleCohesion.Render(window)
+
+		separationInput.Render(window, textI, backSpace, keyPressed)
+		alignmentInput.Render(window, textI, backSpace, keyPressed)
+		cohesionInput.Render(window, textI, backSpace, keyPressed)
+	else:
+		UItoggle.Render(window)
 	backSpace = False
 	keyPressed = False
 	pygame.display.flip()
