@@ -1,10 +1,12 @@
 import pygame
-from tools import Vector, getDistance, NEIGHBORHOOD_RADIUS,SubVectors
+from tools import *
 from random import uniform
 import colorsys
-
+from matrix import *
+from math import pi
 # def hsvToRGB(h, s, v):
 # 	return tuple(round(i * 255) for i in colorsys.hsv_to_rgb(h,s,v))
+
 
 class Boid:
 	def __init__(self, x, y):
@@ -16,9 +18,14 @@ class Boid:
 		#set a random magnitude
 		self.velocity = self.velocity * uniform(1.5, 4)
 		self.acceleration = Vector()
-		self.color = (12,12,12)
+		self.color = (255, 255,255)
+		self.secondaryColor = (70, 70, 70)
 		self.max_speed = 3
 		self.max_length = 1
+		self.size = 2
+		self.stroke = 5
+		self.angle = 0
+		self.hue = 0
 
 	def limits(self, width , height):
 		if self.position.x > width:
@@ -48,7 +55,7 @@ class Boid:
 			dist = getDistance(self.position, mate.position)
 			if mate is not self and dist < NEIGHBORHOOD_RADIUS:
 				temp = SubVectors(self.position,mate.position)
-				temp = temp/dist
+				temp = temp/(dist ** 2)
 				steering.add(temp)
 				total += 1
 
@@ -69,7 +76,8 @@ class Boid:
 			dist = getDistance(self.position, mate.position)
 			if mate is not self and dist < NEIGHBORHOOD_RADIUS:
 				steering.add(mate.velocity)
-				mate.color = (110, 48, 20)
+				mate.color = hsv_to_rgb( self.hue ,1, 1)
+
 				total += 1
 
 		if total > 0:
@@ -105,6 +113,26 @@ class Boid:
 		self.position = self.position + self.velocity
 		self.velocity = self.velocity + self.acceleration
 		self.velocity.limit(self.max_speed)
+		self.angle = self.velocity.heading() + pi/2
 
-	def Draw(self, screen):
-		pygame.draw.circle(screen, self.color, self.position.parseToInt(), 10)
+	def Draw(self, screen, distance, scale):
+		ps = []
+		points = [None for _ in range(3)]
+
+		points[0] = [[0],[-self.size],[0]]
+		points[1] = [[self.size//2],[self.size//2],[0]]
+		points[2] = [[-self.size//2],[self.size//2],[0]]
+
+		for point in points:
+			rotated = matrix_multiplication(rotationZ(self.angle) , point)
+			z = 1/(distance - rotated[2][0])
+
+			projection_matrix = [[z, 0, 0], [0, z, 0]]
+			projected_2d = matrix_multiplication(projection_matrix, rotated)
+
+			x = int(projected_2d[0][0] * scale) + self.position.x
+			y = int(projected_2d[1][0] * scale) + self.position.y
+			ps.append((x, y))
+
+		pygame.draw.polygon(screen, self.secondaryColor, ps)
+		pygame.draw.polygon(screen, self.color, ps, self.stroke)

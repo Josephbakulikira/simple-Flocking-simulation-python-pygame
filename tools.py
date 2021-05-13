@@ -1,6 +1,6 @@
-from math import sqrt
-
-NEIGHBORHOOD_RADIUS = 50
+from math import sqrt, atan2
+import colorsys
+NEIGHBORHOOD_RADIUS = 40
 
 class Vector:
 	def __init__(self, x=0, y=0):
@@ -41,6 +41,12 @@ class Vector:
 		mag = self.magnitude()
 		if not (mag == 0 ):
 			self = self/mag
+
+	def heading(self):
+		angle = atan2(self.y, self.x)
+		# in radians
+		return angle
+
 	def limit(self, max_length):
 		squared_mag = self.magnitude() * self.magnitude()
 		if squared_mag > (max_length * max_length):
@@ -54,10 +60,17 @@ class Vector:
 
 
 def getDistance(v1, v2):
-	return sqrt((v1.x - v2.x)*(v1.x - v2.x) + (v1.y -v2.y)*(v1.y -v2.y))
+	return sqrt((v2.x - v1.x)*(v2.x - v1.x) + (v2.y -v1.y)*(v2.y - v1.y))
 
 def AddVectors(v1, v2):
 	return Vector(v1.x + v2.x, v1.y + v2.y)
+
+def translate(value, min1, max1, min2, max2):
+    return min2 + (max2 - min2)* ((value-min1)/(max1-min1))
+
+def hsv_to_rgb(h, s, v):
+    return tuple(round(i * 255) for i in colorsys.hsv_to_rgb(h, s, v))
+
 
 def SubVectors(v1, v2):
 	return Vector(v1.x - v2.x, v1.y - v2.y)
