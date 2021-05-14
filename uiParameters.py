@@ -16,7 +16,7 @@ SeparationValue = TextUI("separationValue: ", (Width-245, 315), (255, 255, 255))
 AlignmentValue = TextUI("alignmentValue: ", (Width-245, 365), (255, 255, 255))
 CohesionValue = TextUI("cohesionValue: ", (Width-245, 415), (255, 255, 255))
 NumberOfBoids = TextUI("Number of Boids: ", (Width-245, 465), (255, 255, 255))
-ScaleText = TextUI("Boid-Scale: ", (Width-200, 520), (255, 255, 255))
+ScaleText = TextUI("Boid-Scale (radius): ", (Width-200, 520), (255, 255, 255))
 
 toggleSeparation = ToggleButton((Width-160, 170), 20, 20, True)
 toggleAlignment = ToggleButton((Width-160, 210), 20, 20, True)
