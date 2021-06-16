@@ -18,7 +18,7 @@ speed = 0.0005
 
 flock = []
 #number of boids
-n = 100
+n = 50
 #radius of perception of each boid
 
 for i in range(n):
@@ -30,6 +30,7 @@ SpaceButtonPressed = False
 backSpace = False
 keyPressed = False
 showUI = False
+clicked = False
 run = True
 while run:
 	clock.tick(fps)
@@ -41,6 +42,8 @@ while run:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			run = False
+		if event.type == pygame.MOUSEBUTTONUP:
+			clicked = True
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_ESCAPE:
 				run = False
@@ -78,11 +81,6 @@ while run:
 
 
 	if showUI == True:
-		resetButton.HandleMouse()
-		toggleSeparation.HandleMouse()
-		toggleCohesion.HandleMouse()
-		toggleAlignment.HandleMouse()
-		sliderScale.HandleMouse()
 		panel.Render(window)
 		resetButton.Render(window)
 		Behaviours.Render(window)
@@ -95,9 +93,9 @@ while run:
 		NumberOfBoids.Render(window)
 		ScaleText.Render(window)
 
-		toggleSeparation.Render(window)
-		toggleAlignment.Render(window)
-		toggleCohesion.Render(window)
+		toggleSeparation.Render(window, clicked)
+		toggleAlignment.Render(window, clicked)
+		toggleCohesion.Render(window, clicked)
 
 		separationInput.Render(window, textI, backSpace, keyPressed)
 		alignmentInput.Render(window, textI, backSpace, keyPressed)
@@ -110,4 +108,5 @@ while run:
 	backSpace = False
 	keyPressed = False
 	pygame.display.flip()
+	clicked = False
 pygame.quit()

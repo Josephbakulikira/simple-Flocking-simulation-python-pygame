@@ -27,7 +27,7 @@ alignmentInput = DigitInput(10, (Width-160, 350), 80, 30)
 cohesionInput = DigitInput(10, (Width-160, 400), 80, 30)
 numberInput = DigitInput(100, (Width-160, 450), 80, 30)
 
-sliderScale = Slider(Width-280, 550, 40, 0, 100, 180, 10)
+sliderScale = Slider(Width-280, 550, 40, 0, 100, 180, 10, 80)
 
 #toggleDiagonal2 = ToggleButton((Width-160, 290), 20, 20, False)
 #showPoint = ToggleButton((Width-160, 340), 20, 20, True)
