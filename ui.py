@@ -34,6 +34,7 @@ class Button:
 
 
     def Render(self, screen):
+        self.HandleMouse()
         font = pygame.font.Font(self.font, self.fontSize)
         text = font.render(self.text, True, self.textColor)
         textRect = text.get_rect()

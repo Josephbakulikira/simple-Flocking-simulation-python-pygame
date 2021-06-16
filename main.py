@@ -92,11 +92,9 @@ while run:
 		CohesionValue.Render(window)
 		NumberOfBoids.Render(window)
 		ScaleText.Render(window)
-
 		toggleSeparation.Render(window, clicked)
 		toggleAlignment.Render(window, clicked)
 		toggleCohesion.Render(window, clicked)
-
 		separationInput.Render(window, textI, backSpace, keyPressed)
 		alignmentInput.Render(window, textI, backSpace, keyPressed)
 		cohesionInput.Render(window, textI, backSpace, keyPressed)
