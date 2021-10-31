@@ -8,9 +8,9 @@
 
 ---
 #### Controls
- `U` to toggle the UI panel
- `R` to reset
- `Esc` to exit
+ - `U` to toggle the UI panel
+ - `R` to reset
+ - `Esc` to exit
 ---
 ![Screenshot (101)](https://user-images.githubusercontent.com/48150537/118202015-8aa2d580-b476-11eb-992d-9a67b72de395.png)
 ![Screenshot (85)](https://user-images.githubusercontent.com/48150537/118163915-26fdb580-b440-11eb-8ef8-a4e292eb32e8.png)
