@@ -1,10 +1,10 @@
 # simple-Flocking-simulation-python-pygame
-#### youtube channel: https://www.youtube.com/channel/UCjPk9YDheKst1FlAf_KSpyA
+#### youtube channel: [Auctux](https://www.youtube.com/channel/UCjPk9YDheKst1FlAf_KSpyA) 
 ---
 #### Libraries
-    - pygame : pip install pygame
-    - colorsys : pip install colorsys
----
+ > pygame : pip install pygame
+ > colorsys : pip install colorsys
+
 ---
 #### Controls
     "U" to toggle the UI panel
