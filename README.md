@@ -3,6 +3,7 @@
 ---
 #### Libraries
  > pygame : pip install pygame
+ 
  > colorsys : pip install colorsys
 
 ---
